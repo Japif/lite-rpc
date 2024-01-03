@@ -243,7 +243,8 @@ fn get_args() -> Args {
     let mut args = Args::parse();
 
     dotenv().ok();
-
+    args.rpc_addr = env::var("RPC_ADDR").unwrap_or_else(|_| "http://0.0.0.0:8899".to_string());
+    args.ws_addr = env::var("WS_ADDR").unwrap_or_else(|_| "ws://0.0.0.0:8900".to_string());
     args.enable_postgres = args.enable_postgres
         || if let Ok(enable_postgres_env_var) = env::var("PG_ENABLED") {
             enable_postgres_env_var != "false"
